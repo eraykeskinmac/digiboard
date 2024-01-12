@@ -1,11 +1,12 @@
 import { CANVAS_SIZE } from '@/common/constants/canvasSize';
 import { useViewportSize } from '@/common/hooks/useViewportSize';
-import { useMotionValue } from 'framer-motion';
+import { motion, useMotionValue } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
 import { useKeyPressEvent } from 'react-use';
 import { useDraw } from '../hooks/Canvas.hooks';
 import { socket } from '@/common/lib/socket';
 import { drawFromSocket } from '../helpers/Canvas.helpers';
+import Minimap from './Minimap';
 
 const Canvas = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -96,5 +97,46 @@ const Canvas = () => {
     };
   }, [drawing, ctx]);
 
-  return <div>canvas</div>;
+  return (
+    <div className="h-full w-full overflow-hidden">
+      <motion.canvas
+        ref={canvasRef}
+        width={CANVAS_SIZE.width}
+        height={CANVAS_SIZE.height}
+        className={`bg-zinc-300 ${dragging && 'cursor-move'}`}
+        style={{ x, y }}
+        drag={dragging}
+        dragConstraints={{
+          left: -(CANVAS_SIZE.width - width),
+          right: 0,
+          top: -(CANVAS_SIZE.height - height),
+          bottom: 0,
+        }}
+        dragElastic={0}
+        dragTransition={{ power: 0, timeConstant: 0 }}
+        onMouseDown={(e) => handleStartDrawing(e.clientX, e.clientY)}
+        onMouseUp={handleEndDrawing}
+        onMouseMove={(e) => {
+          handleDraw(e.clientX, e.clientY);
+        }}
+        onTouchStart={(e) => {
+          handleStartDrawing(
+            e.changedTouches[0].clientX,
+            e.changedTouches[0].clientY
+          );
+        }}
+        onTouchEnd={handleEndDrawing}
+        onTouchMove={(e) => {
+          handleDraw(e.changedTouches[0].clientX, e.changedTouches[0].clientY);
+        }}
+      />
+      <Minimap
+        ref={smallCanvasRef}
+        x={x}
+        y={x}
+        dragging={dragging}
+        setMovedMiniMap={setMovedMiniMap}
+      />
+    </div>
+  );
 };
