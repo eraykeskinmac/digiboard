@@ -59,6 +59,7 @@ const Minimap = forwardRef<
           dragConstraints={containerRef}
           dragElastic={0}
           dragTransition={{ power: 0, timeConstant: 0 }}
+          onDragStart={() => setMovedMiniMap((prev) => !prev)}
           onDragEnd={() => setMovedMiniMap((prev: boolean) => !prev)}
           className="absolute top-0 left-0 cursor-grab border-2 border-red-500"
           style={{ width: width / 10, height: height / 10, x: miniX, y: miniY }}
