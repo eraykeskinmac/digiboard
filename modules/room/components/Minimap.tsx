@@ -9,16 +9,16 @@ import {
   useRef,
   useState,
 } from 'react';
+import { useBoardPosition } from '../hooks/useBoardPosition';
 
 const Minimap = forwardRef<
   HTMLCanvasElement,
   {
-    x: MotionValue<number>;
-    y: MotionValue<number>;
     dragging: boolean;
     setMovedMiniMap: Dispatch<SetStateAction<boolean>>;
   }
->(({ x, y, dragging, setMovedMiniMap }, ref) => {
+>(({ dragging, setMovedMiniMap }, ref) => {
+  const { x, y } = useBoardPosition();
   const containerRef = useRef<HTMLDivElement>(null);
   const { width, height } = useViewportSize();
 
