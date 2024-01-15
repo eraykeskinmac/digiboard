@@ -98,7 +98,7 @@ const Canvas = () => {
   }, [drawing, ctx]);
 
   return (
-    <div className="h-full w-full overflow-hidden">
+    <div className="relative h-full w-full overflow-hidden">
       <motion.canvas
         ref={canvasRef}
         width={CANVAS_SIZE.width}
