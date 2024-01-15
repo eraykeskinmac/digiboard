@@ -132,8 +132,6 @@ const Canvas = () => {
       />
       <Minimap
         ref={smallCanvasRef}
-        x={x}
-        y={x}
         dragging={dragging}
         setMovedMiniMap={setMovedMiniMap}
       />
