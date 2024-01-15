@@ -3,6 +3,8 @@ import { createServer } from 'http';
 import next, { NextApiHandler } from 'next';
 import { Server } from 'socket.io';
 
+import {} from '@/common/types/global';
+
 const port = parseInt(process.env.PORT || '3000', 10);
 const dev = process.env.NODE_ENV !== 'production';
 const nextApp = next({ dev });
