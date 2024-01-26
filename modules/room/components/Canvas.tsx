@@ -7,6 +7,7 @@ import { useDraw, useSocketDraw } from '../hooks/Canvas.hooks';
 import { socket } from '@/common/lib/socket';
 import { drawFromSocket } from '../helpers/Canvas.helpers';
 import Minimap from './Minimap';
+import { useBoardPosition } from '../hooks/useBoardPosition';
 
 const Canvas = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -24,8 +25,10 @@ const Canvas = () => {
     }
   });
 
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
+  // const x = useMotionValue(0);
+  // const y = useMotionValue(0);
+
+  const { x, y } = useBoardPosition();
 
   const copyCanvasToSmall = () => {
     if (canvasRef.current && smallCanvasRef.current) {
