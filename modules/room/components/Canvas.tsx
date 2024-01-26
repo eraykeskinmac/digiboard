@@ -20,7 +20,7 @@ const Canvas = () => {
   const { width, height } = useViewportSize();
 
   useKeyPressEvent('Control', (e) => {
-    if (e.ctrlKey && !drawing) {
+    if (e.ctrlKey && !dragging) {
       setDragging(true);
     }
   });
@@ -46,13 +46,8 @@ const Canvas = () => {
     }
   };
 
-  const {
-    handleDraw,
-    handleEndDrawing,
-    handleStartDrawing,
-    drawing,
-    handleUndo,
-  } = useDraw(ctx, dragging, copyCanvasToSmall);
+  const { handleDraw, handleEndDrawing, handleStartDrawing, handleUndo } =
+    useDraw(ctx, dragging, copyCanvasToSmall);
 
   useEffect(() => {
     const newCtx = canvasRef.current?.getContext('2d');
