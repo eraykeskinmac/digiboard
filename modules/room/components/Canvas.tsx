@@ -3,7 +3,7 @@ import { useViewportSize } from '@/common/hooks/useViewportSize';
 import { motion, useMotionValue } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
 import { useKeyPressEvent } from 'react-use';
-import { useDraw } from '../hooks/Canvas.hooks';
+import { useDraw, useSocketDraw } from '../hooks/Canvas.hooks';
 import { socket } from '@/common/lib/socket';
 import { drawFromSocket } from '../helpers/Canvas.helpers';
 import Minimap from './Minimap';
@@ -68,39 +68,13 @@ const Canvas = () => {
     };
   }, [dragging]);
 
-  useEffect(() => {
-    let movesToDrawLater: [number, number][] = [];
-
-    let optionsUseLater: CtxOptions = {
-      lineColor: '',
-      lineWidth: 0,
-    };
-
-    socket.on('socket_draw', (movesToDraw, socketOptions) => {
-      if (ctx && !drawing) {
-        drawFromSocket(movesToDraw, socketOptions, ctx!, copyCanvasToSmall);
-      } else {
-        movesToDrawLater = movesToDraw;
-        optionsUseLater = socketOptions;
-      }
-    });
-
-    return () => {
-      socket.off('socket_draw');
-
-      if (movesToDrawLater.length && ctx) {
-        drawFromSocket(
-          movesToDrawLater,
-          optionsUseLater,
-          ctx,
-          copyCanvasToSmall
-        );
-      }
-    };
-  }, [drawing, ctx]);
+  useSocketDraw(ctx, copyCanvasToSmall);
 
   return (
     <div className="relative h-full w-full overflow-hidden">
+      <button className="absolute top-0" onClick={handleUndo}>
+        Undo
+      </button>
       <motion.canvas
         ref={canvasRef}
         width={CANVAS_SIZE.width}
