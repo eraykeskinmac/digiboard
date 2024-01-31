@@ -44,8 +44,13 @@ const Canvas = () => {
     }
   };
 
-  const { handleDraw, handleEndDrawing, handleStartDrawing, handleUndo } =
-    useDraw(ctx, dragging, copyCanvasToSmall);
+  const {
+    handleDraw,
+    handleEndDrawing,
+    drawing,
+    handleStartDrawing,
+    handleUndo,
+  } = useDraw(ctx, dragging, copyCanvasToSmall);
 
   useEffect(() => {
     const newCtx = canvasRef.current?.getContext('2d');
