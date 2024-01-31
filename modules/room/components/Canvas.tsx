@@ -1,11 +1,9 @@
 import { CANVAS_SIZE } from '@/common/constants/canvasSize';
 import { useViewportSize } from '@/common/hooks/useViewportSize';
-import { motion, useMotionValue } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
 import { useKeyPressEvent } from 'react-use';
 import { useDraw, useSocketDraw } from '../hooks/Canvas.hooks';
-import { socket } from '@/common/lib/socket';
-import { drawFromSocket } from '../helpers/Canvas.helpers';
 import Minimap from './Minimap';
 import { useBoardPosition } from '../hooks/useBoardPosition';
 
@@ -66,7 +64,7 @@ const Canvas = () => {
     };
   }, [dragging]);
 
-  useSocketDraw(ctx, copyCanvasToSmall);
+  useSocketDraw(ctx, drawing, copyCanvasToSmall);
 
   return (
     <div className="relative h-full w-full overflow-hidden">
