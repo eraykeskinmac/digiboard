@@ -58,6 +58,19 @@ const Home = () => {
           Join
         </button>
       </form>
+      <div className="mt-8 flex flex-col items-center gap-2">
+        <h5 className="self-start font-bold leading-tight">
+          Create a new room
+        </h5>
+        <button
+          className="rounded-xl mt-2 bg-black p-5 py-1 text-white transition-all hover:scale-105 active:scale-100"
+          onClick={handleCreateRoom}
+        >
+          Create
+        </button>
+      </div>
     </div>
   );
 };
+
+export default Home;
