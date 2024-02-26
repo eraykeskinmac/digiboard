@@ -112,6 +112,10 @@ export const useSocketDraw = (
   const setUsers = useSetRecoilState(usersAtom);
 
   useEffect(() => {
+    socket.emit('joined_room');
+  }, []);
+
+  useEffect(() => {
     socket.on('joined', (roomJSON) => {
       const room: Room = new Map(JSON.parse(roomJSON));
 
