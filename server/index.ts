@@ -4,6 +4,7 @@ import next, { NextApiHandler } from 'next';
 import { Server } from 'socket.io';
 
 import {} from '@/common/types/global';
+import { socket } from '@/common/lib/socket';
 
 const port = parseInt(process.env.PORT || '3000', 10);
 const dev = process.env.NODE_ENV !== 'production';
@@ -43,6 +44,7 @@ nextApp.prepare().then(async () => {
   io.on('connection', (socket) => {
     console.log('connecting');
 
+    socket.join('global');
     rooms.get('global')?.set(socket.id, []);
 
     io.to(socket.id).emit('joined', JSON.stringify([...rooms.get('global')!]));

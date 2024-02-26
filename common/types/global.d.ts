@@ -14,7 +14,7 @@ export declare global {
   interface ServerToClientEvents {
     room: (room: string) => void;
     created: (roomId: string) => void;
-    joined: (roomId: string, faild?: boolean) => void;
+    joined: (roomId: string, failed?: boolean) => void;
     user_draw: (move: Move, options: CtxOptions, userId: string) => void;
     user_undo(userId: string): void;
     mouse_moved: (x: number, y: number, userId: string) => void;
