@@ -128,7 +128,7 @@ export const useSocketDraw = (
     });
 
     return () => {
-      socket.off('joined');
+      socket.off('room');
     };
   }, [ctx, handleEnd, setUsers]);
 
